@@ -2,8 +2,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 const PrivateRoutes = () => {
-  const { jwtToken, loading } = useAuth();
-  console.log("Inside PrivateRoutes, token:", jwtToken);
+  const { jwtToken, loading, user } = useAuth();
 
   if(loading) {
     return <div>Loading...</div>

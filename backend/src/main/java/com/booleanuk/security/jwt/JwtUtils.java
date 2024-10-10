@@ -1,5 +1,6 @@
 package com.booleanuk.security.jwt;
 
+import com.booleanuk.model.User;
 import com.booleanuk.security.services.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -28,12 +29,13 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
+        //Create a new user object so i can pass down the values i want in JWT
         return Jwts.builder().subject((userPrincipal.getUsername()))
                 .issuedAt(new Date())
                 .expiration(new Date((new Date().getTime()) + this.jwtExpirationMs))
                 .signWith(this.key())
                 .claim("id", userPrincipal.getId())
+                .claim("user", userPrincipal)
                 .compact();
     }
 

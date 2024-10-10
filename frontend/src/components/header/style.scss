@@ -1,0 +1,38 @@
+.headerBody{
+    height: 100px;
+    background-color: red;
+    display: flex;
+
+}
+
+.logo {
+    width: 50%;
+    background-color: blue;
+    height: auto;
+}
+
+.navs {
+    width: 50%;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    
+}
+.navUL {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    
+}
+
+.navItem {
+    text-decoration: none;
+    color: black;
+    background-color: red;
+    min-width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

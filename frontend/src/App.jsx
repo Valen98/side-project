@@ -7,6 +7,7 @@ import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/dashboard";
 import ProfilePage  from "./components/profile/profile";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import Header from "./components/header/header";
 const UserContext = createContext();
 
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route element={<Dashboard />} path="/" />
-            <Route element={<ProfilePage />} path="/profile/:id"/>
+            <Route element={<ProfilePage />} path="/profile"/>
           </Route>
           <Route element={<Login />} path="/login" />
           <Route path="/signup" element={<Signup />} />

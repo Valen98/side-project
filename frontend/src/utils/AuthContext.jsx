@@ -11,15 +11,15 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('TOKEN');
+    //THIS IS IF THE USER REFRESH THE WEBSITE
+    const token = localStorage.getItem("TOKEN");
     if (token) {
       setJwtToken(token);
-      const decodedToken = jwtDecode(token);
-      setUser({ username: decodedToken.username });
+      getUser(token);
     }
-    console.log(token)
+    console.log(token);
 
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   const login = async (username, password) => {
@@ -40,23 +40,38 @@ export const AuthProvider = ({ children }) => {
         console.log(data);
         setJwtToken(data.token);
         localStorage.setItem("TOKEN", data.token);
-        const decodedToken = jwtDecode(data.token);
-        setUser({ username: data.username });
+        setUser({id: data.id, username: data.username, email: data.email})
       });
 
-      navigate('/')
+    navigate("/");
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("TOKEN");
-    navigate('/login')
+    navigate("/login");
   };
 
-
+  const getUser = async (token) => {
+    const decodedToken = jwtDecode(token);
+    await fetch(`http://localhost:4000/users/${decodedToken.id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((resp) => {
+        setUser(resp.data);
+      });
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, jwtToken, setJwtToken, loading }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, jwtToken, setJwtToken, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
