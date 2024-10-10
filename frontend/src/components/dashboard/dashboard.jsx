@@ -1,17 +1,18 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../utils/AuthContext"
 
 export default function Dashboard() {
-    const navigate = useNavigate
-    useEffect(() => {
-        if(!localStorage.getItem('TOKEN')) {
-            navigate('/login')
-        }
-    })
+    const {logout} = useAuth();
+
+    const handleSignOut = () => {
+        logout()
+    }
 
     return(
         <div>
             <h1>Dashboard</h1>
+            <button onClick={handleSignOut}>Sign out</button>
         </div>
     )
 }
