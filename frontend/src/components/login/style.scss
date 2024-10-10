@@ -1,0 +1,30 @@
+
+.login-box {
+    background-color: #d5d3d3;
+    width: 30%;
+    border-radius: 5%;
+    padding: 2%;
+    box-shadow: 3px 3px 6px rgb(169, 169, 169);
+
+}
+
+.signup {
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+.signup:hover {
+    cursor:pointer ;
+    text-decoration: underline;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pad: 50px 40px;
+}
+
+.input {
+    margin-left: 1px;
+}

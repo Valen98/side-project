@@ -1,0 +1,40 @@
+.main-section {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+.sign-in-box {
+    background-color: #d5d3d3;
+    width: 30%;
+    border-radius: 5%;
+    padding: 2%;
+    box-shadow: 3px 3px 6px rgb(169, 169, 169);
+}
+
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-box {
+    width: 100%;
+    margin: 1rem;
+}
+
+.login {
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+.login:hover {
+    cursor:pointer ;
+    text-decoration: underline;
+}
