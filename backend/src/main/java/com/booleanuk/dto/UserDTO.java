@@ -13,8 +13,6 @@ public class UserDTO {
     private String username;
     private String password;
     private Set<Role> roles;
-    private List<Integer> game;
     private Date createdAt;
     private Date updatedAt;
-
 }

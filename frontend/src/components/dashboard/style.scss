@@ -1,0 +1,19 @@
+.dashboardMainBody{
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+
+.welcomeMessageBody {
+    margin-top: 1rem;
+    width: 80%;
+    background-color: #fff;
+    height: 5em;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    padding-left: 1rem;
+}

@@ -1,5 +1,6 @@
 package com.booleanuk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -41,6 +43,9 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Snippet> snippets;
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -52,5 +57,9 @@ public class User {
         this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    public void addSnippet(Snippet snippet) {
+        this.snippets.add(snippet);
     }
 }

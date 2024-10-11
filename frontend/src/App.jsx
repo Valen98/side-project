@@ -17,7 +17,7 @@ export default function App() {
   const [jwtToken, setJwtToken] = useState(null);
 
   return (
-    <div>
+    <main>
       <UserContext.Provider
         value={{
           user: user,
@@ -35,7 +35,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </UserContext.Provider>
-    </div>
+    </main>
   );
 }
 

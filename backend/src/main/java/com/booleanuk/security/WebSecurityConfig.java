@@ -70,8 +70,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/auth", "/auth/**").permitAll()
                                 .requestMatchers("/users", "/users/**").authenticated()
-                                //.requestMatchers(HttpMethod.POST, "/games", "/games/**").hasAuthority(ERole.ROLE_ADMIN.toString())
-                                //.requestMatchers(HttpMethod.PUT, "/games", "/games/**").hasAuthority(ERole.ROLE_ADMIN.toString())
+                                .requestMatchers("/snippets", "/snippets/**").permitAll()
                                 //.requestMatchers(HttpMethod.DELETE, "/games", "/games/**").hasAuthority(ERole.ROLE_ADMIN.toString())
                                 .requestMatchers(HttpMethod.GET, "/users", "/users/**").hasAuthority(ERole.ROLE_ADMIN.toString())
                                 .requestMatchers(HttpMethod.POST, "/users", "/users/**").hasAuthority(ERole.ROLE_ADMIN.toString())

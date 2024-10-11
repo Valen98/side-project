@@ -11,7 +11,7 @@ export default function Header() {
             <Link to={"/"} className="navItem">Home</Link>
           </li>
           <li className="navItem">
-            <Link to={"/profile"} className="navItem"></Link>
+            <Link to={"/profile"} className="navItem">Profile</Link>
           </li>
         </ul>
       </div>

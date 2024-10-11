@@ -4,8 +4,10 @@ import { useAuth } from "../../utils/AuthContext";
 import Header from "../header/header";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
-
+  const { logout, user } = useAuth();
+  const handleSignOut = () => {
+    logout();
+  };
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -17,6 +19,7 @@ export default function ProfilePage() {
       {user.id}
       <h1>{user.username}</h1>
       {user.email}
+      <button onClick={handleSignOut}>Sign out</button>
     </div>
   );
 }
