@@ -7,12 +7,16 @@ import com.booleanuk.payload.LoginRequest;
 import com.booleanuk.payload.SignupRequest;
 import com.booleanuk.payload.response.JwtResponse;
 import com.booleanuk.payload.response.MessageResponse;
+import com.booleanuk.reponses.AuthResponse;
+import com.booleanuk.reponses.ErrorResponse;
+import com.booleanuk.reponses.Response;
 import com.booleanuk.repository.RoleRepository;
 import com.booleanuk.repository.UserRepository;
 import com.booleanuk.security.jwt.JwtUtils;
 import com.booleanuk.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,6 +53,11 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        if (loginRequest.getUsername().isEmpty() || loginRequest.getPassword().isEmpty()) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.set("Bad input");
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
         // If using a salt for password use it here
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -64,11 +73,19 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        if (signupRequest.getUsername().isEmpty() || signupRequest.getPassword().isEmpty() || signupRequest.getEmail().isEmpty()) {
+            errorResponse.set("Bad input");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken"));
+            errorResponse.set("Error: Username is already taken");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
         }
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            errorResponse.set("Error: Email is already in use!");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
         // Create a new user add salt here if using one
         User user = new User(signupRequest.getUsername(), signupRequest.getEmail(), encoder.encode(signupRequest.getPassword()));

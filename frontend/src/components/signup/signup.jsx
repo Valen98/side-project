@@ -3,12 +3,15 @@ import { useState } from "react";
 import "./style.scss";
 import { TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../utils/AuthContext";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordController, setPasswordController] = useState("");
+  const [error, setError] = useState("");
+  const { signup } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,18 +25,8 @@ function Signup() {
       password: password
     }
 
-    await fetch("http://localhost:4000/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-    
+    signup(newUser);
+
   };
 
   return (
@@ -41,6 +34,9 @@ function Signup() {
       <div className="sign-in-box">
         <div className="header">
           <h1>Create an account!</h1>
+        </div>
+        <div>
+          {error}
         </div>
         <form onSubmit={handleSubmit} className="sign-in-form">
           <div className="input-box">

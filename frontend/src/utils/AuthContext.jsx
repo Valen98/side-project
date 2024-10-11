@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [jwtToken, setJwtToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const base_URL = process.env.API_URL;
 
   useEffect(() => {
     //THIS IS IF THE USER REFRESH THE WEBSITE
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       password: password,
     };
 
-    await fetch("http://localhost:4000/auth/signin", {
+    await fetch(`${base_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,13 +38,36 @@ export const AuthProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setJwtToken(data.token);
-        localStorage.setItem("TOKEN", data.token);
-        setUser({id: data.id, username: data.username, email: data.email})
+        if (data.status == "error") {
+          alert(data.data.message);
+        } else {
+          console.log(data);
+          setJwtToken(data.token);
+          localStorage.setItem("TOKEN", data.token);
+          setUser({ id: data.id, username: data.username, email: data.email });
+        }
       });
 
     navigate("/");
+  };
+
+  const signup = async (user) => {
+    await fetch(`${base_URL}/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status != "error") {
+          navigate("/login");
+        } else {
+          console.log(data);
+          alert(data.data.message);
+        }
+      });
   };
 
   const logout = () => {
@@ -54,7 +78,7 @@ export const AuthProvider = ({ children }) => {
 
   const getUser = async (token) => {
     const decodedToken = jwtDecode(token);
-    await fetch(`http://localhost:4000/users/${decodedToken.id}`, {
+    await fetch(`${base_URL}/users/${decodedToken.user.id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -70,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, jwtToken, setJwtToken, loading }}
+      value={{ user, login, logout, jwtToken, setJwtToken, loading, signup }}
     >
       {children}
     </AuthContext.Provider>

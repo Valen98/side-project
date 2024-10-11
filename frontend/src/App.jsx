@@ -1,13 +1,15 @@
 import { useState } from "react";
 import "./App.css";
 import Signup from "./components/signup/signup";
-import {  Route,  Routes,  } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { createContext } from "react";
 import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/dashboard";
-import ProfilePage  from "./components/profile/profile";
+import ProfilePage from "./components/profile/profile";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Header from "./components/header/header";
+
+
 const UserContext = createContext();
 
 export default function App() {
@@ -27,7 +29,7 @@ export default function App() {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route element={<Dashboard />} path="/" />
-            <Route element={<ProfilePage />} path="/profile"/>
+            <Route element={<ProfilePage />} path="/profile" />
           </Route>
           <Route element={<Login />} path="/login" />
           <Route path="/signup" element={<Signup />} />

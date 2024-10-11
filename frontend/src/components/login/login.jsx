@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.scss";
 import { UserContext } from "../../App";
 import { useAuth } from "../../utils/AuthContext";
@@ -10,10 +10,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const { jwtToken, setJwtToken } = useContext(UserContext);
   const { login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("TOKEN")) {
+      navigate("/");
+    }
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password)
+    login(username, password);
   };
 
   return (
