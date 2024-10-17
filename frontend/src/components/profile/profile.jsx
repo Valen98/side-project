@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { decodeToken } from "../../utils/JwtToken";
 import { useAuth } from "../../utils/AuthContext";
 import Header from "../header/header";
+import Loading from "../loading/loading";
 
 export default function ProfilePage() {
   const { logout, user } = useAuth();
   const handleSignOut = () => {
     logout();
   };
+  
   if (!user) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
